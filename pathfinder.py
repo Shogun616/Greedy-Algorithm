@@ -7,30 +7,31 @@ class Pathfinder:
         self._table = {}
     
 
-    def findCheapestPath(self):
+    def findCheapestPath(self): 
 
-       
-       
-
-        starting_row = random.randint( 0, self._map.getHeight() )
+        matrix = self._map.getMatrix()
+        rows = self._map.getHeight()
+        cols = self._map.getWidth()
+        lowest_cost_so_far = None
+        best_path = None
 
       
-        ( cost, path ) = self.findPath( starting_row,  )
-
-       
-        self._visualiser.addPath(path)
-
-       
-        self._visualiser.setBestPath(path)
-
-        self._visualiser.setBestPathCost( cost )
-
-        
-        return
-
-       
+        height = rows
+        for r in range(rows):
+            ( cost, path ) = self.findPath(r)
+            if lowest_cost_so_far == None or cost < lowest_cost_so_far:
+                lowest_cost_so_far = cost
+                best_path = path
 
 
+            self._visualiser.addPath(path)
+            
+ 
+            self._visualiser.setBestPath(best_path)
+
+            self._visualiser.setBestPathCost( lowest_cost_so_far )
+   
+    
     def findPath(self, starting_row):
           
         matrix = self._map.getMatrix()
@@ -42,18 +43,28 @@ class Pathfinder:
         cost = 0
         col=0
         path=[ row ]
+        
        
        
 
         while col+1 < cols:
             # how high are we right now?
             current_altitude = matrix[row][col]
-            right_altitude = matrix[row][col+1]
-            up_altiude = matrix[row-1][col+1]
-            down_altitude = matrix[row+1][col+1]
-            cost_up = math.fabs( current_altitude - up_altiude)
+            right_altitude = matrix[row][col+1]    
+            if row-1 >= 0:
+                up_altiude = matrix[row-1][col+1]
+            else:
+                up_altiude = 1000000
+            if row+1 < rows:
+                down_altitude = matrix[row+1][col+1]
+            else:
+                down_altitude = 1000000
+
+
+            cost_up = math.fabs(current_altitude - up_altiude)
             cost_right = math.fabs(current_altitude - right_altitude)
-            cost_down = math.fabs( current_altitude - down_altitude)
+            cost_down = math.fabs(current_altitude - down_altitude)
+        
 
 
             # Pick a random direction - up/right,  right,  down/right
