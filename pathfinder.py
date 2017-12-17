@@ -23,10 +23,11 @@ class Pathfinder:
                 lowest_cost_so_far = cost
                 best_path = path
 
+ 
+
 
             self._visualiser.addPath(path)
             
- 
             self._visualiser.setBestPath(best_path)
 
             self._visualiser.setBestPathCost( lowest_cost_so_far )
@@ -43,9 +44,6 @@ class Pathfinder:
         cost = 0
         col=0
         path=[ row ]
-        
-       
-       
 
         while col+1 < cols:
             # how high are we right now?
@@ -59,18 +57,21 @@ class Pathfinder:
                 down_altitude = matrix[row+1][col+1]
             else:
                 down_altitude = 1000000
-
+            if row-1 <= 0:
+                left_altitude = matrix[row-1][col-1]
+            else:
+                left_altitude = 1000000
 
             cost_up = math.fabs(current_altitude - up_altiude)
             cost_right = math.fabs(current_altitude - right_altitude)
             cost_down = math.fabs(current_altitude - down_altitude)
-        
+            cost_left = math.fabs(current_altitude - left_altitude)
 
 
             # Pick a random direction - up/right,  right,  down/right
-            if cost_up < cost_right and cost_up < cost_down:
+            if cost_up < cost_right and cost_up < cost_down and cost_up < cost_left:
                 r = -1
-            elif cost_down < cost_up and cost_down < cost_right:
+            elif cost_down < cost_up and cost_down < cost_right and cost_down < cost_left:
                 r = 1
             else:
                 r = 0
@@ -82,6 +83,8 @@ class Pathfinder:
                 row = rows-1
             col += 1
 
+
+            
             # how high are we now?
             new_altitude = matrix[row][col]
 
@@ -92,7 +95,7 @@ class Pathfinder:
             cost += delta
 
             # add this step to the path we are following
-            path.append( row )
+            path.append( row  )
 
 
         return ( cost, path )
