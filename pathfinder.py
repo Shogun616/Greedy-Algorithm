@@ -6,7 +6,6 @@ class Pathfinder:
         self._map = map
         self._table = {}
     
-
     def findCheapestPath(self): 
 
         matrix = self._map.getMatrix()
@@ -15,16 +14,12 @@ class Pathfinder:
         lowest_cost_so_far = None
         best_path = None
 
-      
         height = rows
         for r in range(rows):
             ( cost, path ) = self.findPath(r)
             if lowest_cost_so_far == None or cost < lowest_cost_so_far:
                 lowest_cost_so_far = cost
                 best_path = path
-
- 
-
 
             self._visualiser.addPath(path)
             
@@ -67,7 +62,6 @@ class Pathfinder:
             cost_down = math.fabs(current_altitude - down_altitude)
             cost_left = math.fabs(current_altitude - left_altitude)
 
-
             # Pick a random direction - up/right,  right,  down/right
             if cost_up < cost_right and cost_up < cost_down and cost_up < cost_left:
                 r = -1
@@ -82,8 +76,6 @@ class Pathfinder:
             if row > rows-1:
                 row = rows-1
             col += 1
-
-
             
             # how high are we now?
             new_altitude = matrix[row][col]
@@ -97,8 +89,4 @@ class Pathfinder:
             # add this step to the path we are following
             path.append( row  )
 
-
         return ( cost, path )
-
-
-
