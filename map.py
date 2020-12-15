@@ -29,7 +29,3 @@ class Map:
 
     def getHeight(self):
         return self._height
-
-
-
-
