@@ -1,7 +1,6 @@
 import sys
 import pygame
 
-
 class Visualiser:
     def __init__(self, name, width, height):
         self._name = name
@@ -19,7 +18,6 @@ class Visualiser:
         self._screen = pygame.display.set_mode((width, height))
         pygame.font.init()
         pygame.display.set_caption(self._name)
-
 
     def setMap(self, map):
         self._map = map
@@ -85,9 +83,5 @@ class Visualiser:
             self.drawBestPathCost()
 
             pygame.display.update()
-
+            
         pygame.quit()
-
-
-
-
